@@ -17,7 +17,7 @@ function genSudoku() {
 // A Finir, test avec [0][0] = 1 et [0][1] = 1 fait et fonctionnelle
 // Le tableau contien des chiffres de 0 à 9, '0' pour les case qui n'ont pas encore été écrites
 // retourne un Booleen si la region sudoku 3x3 de (x,y) dans sudokuGrill est valide
-function squareValid(x,y,sudokuGrill) {
+function isSquareValid(x,y,sudokuGrill) {
     let topLeftX, topLeftY
     let out = true
     topLeftX = Math.trunc(x/3)
@@ -29,7 +29,7 @@ function squareValid(x,y,sudokuGrill) {
             num = sudokuGrill[i][j]
             if (listNum.includes(num) && (num != 0)) {
                 out = false
-                return (out)
+                return out
             }
             listNum.push(num)
         }
@@ -37,7 +37,7 @@ function squareValid(x,y,sudokuGrill) {
     return out
 }
 
-function lineVValid(x,y,sudokuGrill) {
+function isLineValid(x,y,sudokuGrill) {
     let h, v
     let listNum
     let out = true
@@ -51,7 +51,7 @@ function lineVValid(x,y,sudokuGrill) {
         if (listNum.includes(num) && (num != 0)) {
             out = false
             //console.error('Erreur H')
-            return (out)
+            return out
         }
         listNum.push(num)
     }
@@ -63,10 +63,18 @@ function lineVValid(x,y,sudokuGrill) {
         if (listNum.includes(num) && (num != 0)) {
             out = false
             //console.error('Erreur V')
-            return (out)
+            return out
         }
         listNum.push(num)
     }
 
     return out
+}
+
+// Tester si un chiffre a la position [x,y] est valide
+function isAtxyValid(x,y,sudokuGrill) {
+    if (isLineValid(x,y,sudokuGrill) && isSquareValid(x,y,sudokuGrill))
+        return true
+    else
+        return false
 }
